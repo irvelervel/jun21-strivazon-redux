@@ -12,6 +12,9 @@ export const initialState = {
   cart: {
     products: [],
   },
+  user: {
+    userName: '',
+  },
 }
 
 // 2)

@@ -2,22 +2,17 @@ import { Component } from "react";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { connect } from 'react-redux'
+import { addToCartAction } from '../actions'
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  userName: state.user.userName
+})
 
 // mapDispatchToProps is a function returning an object
 const mapDispatchToProps = (dispatch) => ({
   // we need a way of adding the selectedBook to the cart products array
   addToCart: (book) => {
-    dispatch({
-      type: 'ADD_ITEM_TO_CART',
-      // an action is a JS object with AT LEAST a type property
-      payload: book
-      // the PAYLOAD is the property carrying over any additional piece of info
-      // needed by the reducer to compute the new state
-      // payload is all the additional info needed from the reducers to calculate
-      // the new state of the application
-    })
+    dispatch(addToCartAction(book))
   }
 })
 
@@ -63,9 +58,15 @@ class BookDetail extends Component {
                   <span className="font-weight-bold">Price:</span>
                   {this.state.book.price}
                 </p>
-                <Button color="primary" onClick={() => this.props.addToCart(this.state.book)}>
-                  ADD TO CART
-                </Button>
+                {
+                  this.props.userName ? (
+                    <Button color="primary" onClick={() => this.props.addToCart(this.state.book)}>
+                      ADD TO CART
+                    </Button>
+                  ) : (
+                    <div>You need to be logged in to add items to the cart!</div>
+                  )
+                }
               </Col>
             </Row>
           </>

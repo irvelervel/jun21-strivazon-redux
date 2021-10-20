@@ -1,8 +1,9 @@
+import { ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART, SET_USERNAME } from '../actions'
 import { initialState } from '../store'
 
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_ITEM_TO_CART': {
+    case ADD_ITEM_TO_CART: {
       // this.state.cart.products.push() <-- THIS IS SUPER WRONG
       // BECAUSE PUSH MODIFIES THE ARRAY IN-PLACE
       // YOU DON'T WANT EVER TO MUTATE YOUR ARGUMENTS
@@ -19,7 +20,7 @@ const mainReducer = (state = initialState, action) => {
         },
       }
     }
-    case 'REMOVE_ITEM_FROM_CART': {
+    case REMOVE_ITEM_FROM_CART: {
       return {
         ...state,
         cart: {
@@ -27,6 +28,15 @@ const mainReducer = (state = initialState, action) => {
           products: state.cart.products.filter((book, i) => i !== action.payload),
           // products: [...state.cart.products.slice(0, action.payload), ...state.cart.products.slice(action.payload + 1)]
           // both of these strategies do the same result! choose you favourite :)
+        },
+      }
+    }
+    case SET_USERNAME: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          userName: action.payload,
         },
       }
     }
