@@ -13,7 +13,20 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         cart: {
           ...state.cart,
-          products: [...state.cart.products, action.payload],
+          // products: [...state.cart.products, action.payload],
+          products: state.cart.products.concat(action.payload),
+          // both of these strategies do the same result! choose you favourite :)
+        },
+      }
+    }
+    case 'REMOVE_ITEM_FROM_CART': {
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          products: state.cart.products.filter((book, i) => i !== action.payload),
+          // products: [...state.cart.products.slice(0, action.payload), ...state.cart.products.slice(action.payload + 1)]
+          // both of these strategies do the same result! choose you favourite :)
         },
       }
     }
@@ -23,3 +36,14 @@ const mainReducer = (state = initialState, action) => {
 }
 
 export default mainReducer
+
+// 1
+// 2
+// 3
+// 4 <- I want to remove this one
+// 5
+
+// 1
+// 2
+// 3
+// 5
